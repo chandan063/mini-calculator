@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Calculator</title>
+<style>
+    html,body{
+     height: 100%;
+    }
+    body{
+        /* background-color:burlywood; */
+        background: rgb(2,0,36);
+background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(200,219,221,0.2274159663865546) 28%, rgba(0,212,255,1) 100%);
+        margin: 0px;
+        padding: 0px;
+        
+    }
+
+    .cal{
+        background-color: rgba(138,151,149,0.9304971988795518);
+        border-radius: 2%;
+        width: 346px;
+        
+        padding: 15px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        box-shadow: 0 10px 0 white, 0 8px 10px 0.5% black;
+       
+       
+        
+    }
+    .result{
+        background-color:#fbf5f5;
+        width:91%;
+        height: 50px;
+       margin: 8px 0 26px 12px;
+       line-height: 50px;
+        text-align: right;
+        
+        padding-right:10px ;
+        font-size: 35px;
+        overflow:hidden;
+        box-shadow: inset 0 0 8px rgba(0,0,0,0.5), inset 0px 2px 0 
+        #a1a1a1;
+
+    }
+    ul{
+        padding: 0;
+        margin: 0;
+
+    }
+
+    ul li{
+        list-style: none;
+        background-color:rgba(249, 216, 216, 0.867);
+        border-radius: 3px;
+        padding: 11px;
+        width: 12.2%;
+        float: left;
+        color: black;
+        margin: 11px;
+        cursor: pointer;
+        font-size: 26px;
+        box-shadow: 0 4px 0 white, inset 0 2px 5px rgba(0,0,0,0.75);
+
+    }
+
+    #clear{
+        background-color: rgb(241, 78, 78);
+       }
+    ul li:active{
+        position: relative;
+        top: 5px;
+        box-shadow: inset 0 3px 3px rgba(0,0,0,0.4);
+
+    }   
+    /* ul li:nth-child(18){
+        line-height: 30px;
+    } */
+    h1{
+        text-align: center;
+    }
+    
+
+/* Media query for devices with a maximum width of 768px */
+   @media(max-width: 768px) {
+  .cal{
+    margin-top: -70px;
+  }
+  
+  
+}
+</style>
+
+</head>
+<body>
+    <h1>Simple Mini-Calculator</h1>
+    <div class="cal">
+          <div class="result">0</div>
+        <div class="cal-1">
+            <ul>
+                <li>(</li>
+                <li>)</li>
+                <li>%</li>
+                <li>*</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>+</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>-</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>/</li>
+                <li>0</li>
+                <li>.</li>
+                <li id="clear"><b>c</b></li>
+                <li style="background-color: rgb(130, 213, 130);">=</li>
+                
+            </ul>
+        </div>  
+    </div>
+
+    <script>
+        const $lis=document.querySelectorAll("ul li")
+        $lis.forEach((node) => {
+            node.addEventListener('mousedown',function(event){
+            const value=node.innerText.trim()
+            const $result=document.querySelector(".result")
+           const resultText=$result.innerText.trim()
+           
+           if(resultText=='0' || resultText=='undefined' || resultText=='Infinity' ){
+            $result.innerText=''
+           }
+
+           if(value=='='){
+            let solution =eval(resultText)
+            $result.innerText=solution
+            return true
+           }
+           
+           if(value.toLowerCase()=='c'){
+            $result.innerText=''
+            return true
+           }
+           $result.append(value)
+            
+            })
+        });
+
+  document.addEventListener('keydown', function(event) {
+  const key = event.key;
+  const $result = document.querySelector(".result");
+  const resultText = $result.innerText.trim();
+
+  // Handle number keys
+  if (/^\d$/.test(key)) {
+    $result.append(key);
+  }
+
+  // Handle operator keys
+  if (/^[+\-*/%]$/.test(key)) {
+    $result.append(key);
+  }
+
+  // Handle decimal point
+  if (key === '.' && !resultText.includes('.')) {
+    $result.append(key);
+  }
+
+  // Handle equals key
+  if (key === 'Enter' || key === '=') {
+    let solution = eval(resultText);
+    $result.innerText = solution;
+  }
+
+  // Handle clear key
+  if (key === 'Escape' || key === 'c' || key=='<-') {
+    $result.innerText = '';
+  }
+});
+
+    </script>
+</body>
+</html>
